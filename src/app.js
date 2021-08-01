@@ -1,10 +1,10 @@
-const greeting = 'Hello World';
-console.log(greeting);
+let todos = []
 
-const getData = async (url) => {
-  const response = await fetch(url);
-  const result = await response.json();
-  console.log(result);
-};
-
-getData('https://jsonplaceholder.typicode.com/posts');
+const addTodo = () => {
+  const todo = document.getElementById('input').value
+  document.getElementById('input').innerHTML = ''
+  todos.concat({
+    name: todo,
+    finished: false
+  })
+}
