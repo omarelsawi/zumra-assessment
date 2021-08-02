@@ -14,6 +14,8 @@ function addTodo() {
     text: todo,
     finished: false
   })
+  document.getElementById('status-sort').innerHTML = 'Status'
+  document.getElementById('title-sort').innerHTML='Title'
 }
 
 const deleteTodo = (id) => {
@@ -27,6 +29,7 @@ const toggleFinished = (id) => {
       finished: todo.id === id ? !todo.finished : todo.finished
     }
   })
+  document.getElementById('status-sort').innerHTML = 'Status'
 }
 
 const sortByTitle = () => {
@@ -41,11 +44,24 @@ const sortByTitle = () => {
     }
     return 0;
   })
-  console.log(todos)
+  if (document.getElementById('title-sort').innerHTML.includes('Asc')){
+    todos = todos.reverse()
+    document.getElementById('title-sort').innerHTML='Title: Desc'
+  }else{
+    document.getElementById('title-sort').innerHTML='Title: Asc'
+  }
+  document.getElementById('status-sort').innerHTML = 'Status'
 }
 
 const sortByUnfinished = () => {
-  todos.sort((a, b) => a.finished - b.finished)
+  if (document.getElementById('status-sort').innerHTML.includes('Unfinished first')) {
+    todos.sort((a, b) => b.finished - a.finished)
+    document.getElementById('status-sort').innerHTML='Status: Finished first'
+  } else {
+    todos.sort((a, b) => a.finished - b.finished)
+    document.getElementById('status-sort').innerHTML='Status: Unfinished first'
+  }
+  document.getElementById('title-sort').innerHTML='Title'
 }
 
 const listTodosInUI = () => {
