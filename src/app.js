@@ -30,7 +30,18 @@ const toggleFinished = (id) => {
 }
 
 const sortByTitle = () => {
-  todos.sort((a, b) => a.text.toLowerCase().localeCompare() - b.text.toLowerCase().localeCompare())
+  todos.sort((a, b) => {
+    var textA = a.text.toUpperCase();
+    var textB = b.text.toUpperCase();
+    if (textA < textB) {
+      return -1;
+    }
+    if (textA > textB) {
+      return 1;
+    }
+    return 0;
+  })
+  console.log(todos)
 }
 
 const sortByUnfinished = () => {
@@ -41,7 +52,9 @@ const listTodosInUI = () => {
   document.getElementById('todos').innerHTML = ''
   todos.forEach((todo) => {
     let listElement = document.createElement('li')
+    let heading = document.createElement('div')
     let text = document.createTextNode(todo.text + ' ')
+    let space = document.createTextNode(' ')
 
     let deleteButton = document.createElement('button')
     deleteButton.className = 'btn'
@@ -53,10 +66,13 @@ const listTodosInUI = () => {
     toggleTodo.innerHTML = todo.finished ? 'Finished' : 'Unfinished'
     toggleTodo.addEventListener('click', () => { toggleFinished(todo.id); listTodosInUI() })
 
-    listElement.style.textDecoration = todo.finished ? 'line-through' : 'none'
+    heading.style.textDecoration = todo.finished ? 'line-through' : 'none'
+    listElement.style.paddingTop = '20px'
 
-    listElement.appendChild(text)
+    heading.appendChild(text)
+    listElement.appendChild(heading)
     listElement.appendChild(deleteButton)
+    listElement.appendChild(space)
     listElement.appendChild(toggleTodo)
 
     document.getElementById('todos').appendChild(listElement)
